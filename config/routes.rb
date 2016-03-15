@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  #get 'sponsored_posts/show'
+
+  #get 'sponsored_posts/new'
+
+  #get 'sponsored_posts/edit'
+
   #get 'posts/index'
 
   #get 'posts/show'
@@ -12,10 +18,11 @@ Rails.application.routes.draw do
   #get 'welcome/about'
   #resources :posts
   #resources :topics
-  resources :topics do
+    resources :topics do
     resources :posts, except: [:index]
-   end
+    resources :sponsored_posts, except: [:index]
+    end
 
-  get 'about' => 'welcome#about'
+   get 'about' => 'welcome#about'
   root 'welcome#index'
 end

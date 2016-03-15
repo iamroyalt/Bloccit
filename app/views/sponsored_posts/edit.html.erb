@@ -1,0 +1,28 @@
+<h1>Edit Sponsored Posts</h1>
+
+
+ <div class="row">
+   <div class="col-md-4">
+     <p>Guidelines for Editing Sponsored Posts</p>
+     <ul>
+       <li>Give us your best offer.</li>
+       <li>Tell us how it will change our life.</li>
+       <li>Hashtags are annoying.</li>
+     </ul>
+   </div>
+   <div class="col-md-8">
+     <%= form_for [@sponsored_post.topic, @sponsored_post] do |f| %>
+       <div class="form-group">
+         <%= f.label :title %>
+         <%= f.text_field :title, class: 'form-control', placeholder: "Enter Sponsored Post title" %>
+       </div>
+       <div class="form-group">
+         <%= f.label :body %>
+         <%= f.text_area :body, rows: 8, class: 'form-control', placeholder: "Enter Sponsored Post body" %>
+       </div>
+       <div class="form-group">
+         <%= f.submit "Save", class: 'btn btn-success' %>
+       </div>
+     <% end %>
+   </div>
+ </div>
