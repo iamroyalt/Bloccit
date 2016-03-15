@@ -31,3 +31,5 @@ source 'https://rubygems.org'
  gem 'turbolinks'
 # added bootstrap
  gem 'bootstrap-sass'
+
+gem 'bcrypt'
