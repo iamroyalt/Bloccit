@@ -2,6 +2,7 @@ class PostsController < ApplicationController
 #before_action filter to call the require_sign_in method before each of the controller actions, except for the show action
   before_action :require_sign_in, except: :show
   before_action :authorize_user, except: [:show, :new, :create]
+  before_action :authorize_moderator, except: [:show, :new, :create, :destroy]
   def show
     @post = Post.find(params[:id])
   end
@@ -67,4 +68,12 @@ private
          end
        end
 
+       def authorize_moderator
+        post = Post.find(params[:id])
+
+        unless current_user == post.user || current_user.admin? || current_user.moderator?
+        flash[:alert] = "You must be an admin or moderator to do that."
+        redirect_to topics_path
+        end
+      end
 end
