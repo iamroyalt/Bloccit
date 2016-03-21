@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
   before_save { self.email = email.downcase }
+  before_save { self.role ||= :member }
+
   has_many :posts
  #validates to ensure name is present and has min/max length
    validates :name, length: { minimum: 1, maximum: 100 }, presence: true
@@ -14,4 +16,6 @@ class User < ActiveRecord::Base
 
 
    has_secure_password
+
+   enum role: [:member, :admin]
 end
