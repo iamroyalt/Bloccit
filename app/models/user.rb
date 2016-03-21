@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   before_save { self.role ||= :member }
 
   has_many :posts
+  has_many :comments
  #validates to ensure name is present and has min/max length
    validates :name, length: { minimum: 1, maximum: 100 }, presence: true
 
