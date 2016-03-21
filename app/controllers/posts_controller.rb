@@ -1,7 +1,6 @@
 class PostsController < ApplicationController
-  #def index
-    #@posts = Post.all
-  #end
+#before_action filter to call the require_sign_in method before each of the controller actions, except for the show action
+  before_action :require_sign_in, except: :show
 
   def show
     @post = Post.find(params[:id])
@@ -13,12 +12,9 @@ class PostsController < ApplicationController
   end
 
   def create
-     @post = Post.new
-     @post.title = params[:post][:title]
-     @post.body = params[:post][:body]
      @topic = Topic.find(params[:topic_id])
-     @post.topic = @topic
-
+     @post = @topic.posts.build(post_params)
+     @post.user = current_user
      if @post.save
        flash[:notice] = "Post was saved."
        redirect_to [@topic, @post]
@@ -34,12 +30,11 @@ class PostsController < ApplicationController
 
   def update
      @post = Post.find(params[:id])
-     @post.title = params[:post][:title]
-     @post.body = params[:post][:body]
+     @post.assign_attributes(post_params)
 
      if @post.save
        flash[:notice] = "Post was updated."
-       redirect_to [@topic, @post]
+       redirect_to [@post.topic, @post]
      else
        flash.now[:alert] = "There was an error saving the post. Please try again."
        render :edit
@@ -58,4 +53,10 @@ class PostsController < ApplicationController
           render :show
         end
       end
+private
+
+    def post_params
+      params.require(:post).permit(:title, :body)
+    end
+
 end
