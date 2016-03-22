@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+#resource instructs Rails to create routes for creating, updating, viewing, and deleting instances
   resources :topics do
   resources :posts, except: [:index]
   end

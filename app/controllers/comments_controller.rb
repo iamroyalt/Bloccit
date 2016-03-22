@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-#require sign in to ensure that guest users are not permitted to create comments
+#require sign in to ensure that guest users are not permitted to create comments or delete
   before_action :require_sign_in
   before_action :authorize_user, only: [:destroy]
 
@@ -12,11 +12,10 @@ class CommentsController < ApplicationController
 
        if comment.save
          flash[:notice] = "Comment saved successfully."
-   
          redirect_to [@post.topic, @post]
+#redirect to the posts show view. Depending on whether the comment was valid, we'll either display a success or an error message to the user.
        else
          flash[:alert] = "Comment failed to save."
-
          redirect_to [@post.topic, @post]
        end
      end

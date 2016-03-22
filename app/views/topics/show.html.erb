@@ -8,13 +8,15 @@
 <div class="row">
     <div class="col-md-8">
      <p class="lead"><%= @topic.description %></p>
-
+<!-- iterate over the posts belonging to @topic, and display each post -->
      <% @topic.posts.each do |post| %>
      <div class="media">
        <div class="media-body">
          <h4 class="media-heading">
+<!-- topic_post_path takes a topic and a post and generates a path to posts show view -->
            <%= link_to post.title, topic_post_path(@topic, post) %>
            <small>submitted <%= time_ago_in_words(post.created_at) %> ago by <%= post.user.name %> <br>
+<!-- submission and comment details for each post in the show view -->
            <%= post.comments.count %> Comments
         </small>
          </h4>
