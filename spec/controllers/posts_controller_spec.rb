@@ -1,28 +1,19 @@
 require 'rails_helper'
+require 'random_data'
+
 
 RSpec.describe PostsController, type: :controller do
   let(:my_topic) { Topic.create!(name:  RandomData.random_sentence, description: RandomData.random_paragraph) }
 
   let(:my_post) { my_topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph) }
 
-#let(:my_post) { Post.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph) }
-  #describe "GET #index" do
-    #it "returns http success" do
-      #get :index
-      #expect(response).to have_http_status(:success)
-    #end
-    #it "assigns [my_post] to @posts" do
-       #get :index
-       #expect(assigns(:posts)).to eq([my_post])
-    #end
-  #end
 
   describe "GET show" do
      it "returns http success" do
-       #get :show, {id: my_post.id}
-       get :show, topic_id: my_topic.id, id: my_post.id
-       expect(response).to have_http_status(:success)
+      get :show, topic_id: my_topic.id, id: my_post.id
+      expect(response).to have_http_status(:success)
      end
+
      it "renders the #show view" do
        #get :show, {id: my_post.id}
        get :show, topic_id: my_topic.id, id: my_post.id
@@ -36,12 +27,11 @@ RSpec.describe PostsController, type: :controller do
      end
    end
 
-describe "GET new" do
-     it "returns http success" do
-        #get :new
-        get :new, topic_id: my_topic.id
-        expect(response).to have_http_status(:success)
-      end
+   describe "GET new" do
+    it "returns http success" do
+      get :new, topic_id: my_topic.id
+      expect(response).to have_http_status(:success)
+    end
 
       it "renders the #new view" do
         #get :new

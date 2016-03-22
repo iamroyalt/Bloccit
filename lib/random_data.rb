@@ -26,6 +26,6 @@ module RandomData
      end
 
      def self.random_number
-       1 + rand (500)
+       Random.rand(2...999)
      end
 end
