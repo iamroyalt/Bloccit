@@ -18,7 +18,7 @@
     <% end %>
   </div>
 <!-- check if there is a signed-in current_user, and that current_user is an admbin. See topics_helper.rb -->
-  <% if user_is_authorized_for_topics? %>
+<% if user_is_authorized_for_topics? %>
     <div class="col-md-4">
       <%= link_to "New Topic", new_topic_path, class: 'btn btn-success' %>
     </div>
