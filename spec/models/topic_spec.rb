@@ -4,6 +4,11 @@ RSpec.describe Topic, type: :model do
   let(:topic) { Topic.create!(name: RandomData.random_sentence, description: RandomData.random_paragraph) }
 
    it { is_expected.to have_many(:posts) }
+#we expect topics to have many labelings
+   it { is_expected.to have_many(:labelings) }
+ #we expect topics to have many labels through labelings
+   it { is_expected.to have_many(:labels).through(:labelings) }
+
 
 
    describe "attributes" do

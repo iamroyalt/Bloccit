@@ -19,6 +19,9 @@ class TopicsController < ApplicationController
       @topic = Topic.new(topic_params)
 
       if @topic.save
+#call a class method named update_labels on Label. We pass it the labels associated with the current topic_params
+#if the topic was saved successfully. We only update the labels if the save was successful sot aht we avoid creating labels without topics_path
+        @topic.labels = Label.update_labels(params[:topic][:labels])
         redirect_to @topic, notice: "Topic was saved successfully."
       else
         flash.now[:alert] = "Error creating topic. Please try again."
@@ -35,6 +38,8 @@ class TopicsController < ApplicationController
       @topic.assign_attributes(topic_params)
 
       if @topic.save
+        # #20
+         @topic.labels = Label.update_labels(params[:topic][:labels])
          flash[:notice] = "Topic was updated."
         redirect_to @topic
       else

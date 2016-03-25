@@ -2,6 +2,7 @@ class PostsController < ApplicationController
 #before_action filter to call the require_sign_in method before each of the controller actions, except for the show action
   before_action :require_sign_in, except: :show
   before_action :authorize_user, except: [:show, :new, :create]
+
   def show
     @post = Post.find(params[:id])
   end
@@ -25,6 +26,7 @@ class PostsController < ApplicationController
      @post.user = current_user
 #assign @post.user in the same way we assigned @post.topic, to properly scope the new post.
      if @post.save
+       @post.labels = Label.update_labels(params[:post][:labels])
        flash[:notice] = "Post was saved."
 #change the redirect to use the nested post path
 #if we successfully save Post to the database, we display a success message
@@ -48,6 +50,7 @@ class PostsController < ApplicationController
      @post.assign_attributes(post_params)
 
      if @post.save
+       @post.labels = Label.update_labels(params[:post][:labels])
        flash[:notice] = "Post was updated."
 #change the redirect to use the *nested* post path
        redirect_to [@post.topic, @post]
