@@ -6,6 +6,10 @@ class Post < ActiveRecord::Base
   has_many :labelings, as: :labelable
   has_many :labels, through: :labelings
 
+########Assignment-43  creating the callback
+after_create :create_vote
+#################################
+
 #The default_scope will order all posts by their created_at date, in descending order,
 #The most recent posts will be displayed first on topic show views
   default_scope {order ('created_at DESC')}
@@ -33,6 +37,10 @@ class Post < ActiveRecord::Base
        new_rank = points + age_in_days
        update_attribute(:rank, new_rank)
   end
-
+#######Assignment-43 creating private method
+private
+def create_vote
+  user.votes.create(value: 1, post: self)
+end   
 
 end
