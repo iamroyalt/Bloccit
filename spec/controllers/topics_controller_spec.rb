@@ -4,7 +4,8 @@ include SessionsHelper
 
 RSpec.describe TopicsController, type: :controller do
   let (:my_topic) { Topic.create!(name:  RandomData.random_sentence, description:   RandomData.random_paragraph) }
-
+##########Assignment-42###############
+  let(:my_comment) {Comment.create!(name: "C1")}
   context "guest" do
     describe "GET index" do
       it "returns http success" do

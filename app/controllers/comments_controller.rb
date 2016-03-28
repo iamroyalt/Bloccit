@@ -4,8 +4,11 @@ class CommentsController < ApplicationController
   before_action :authorize_user, only: [:destroy]
 
      def create
-#we find the correct post using post_id and then create a new comment using comment_params.
-##We assign the comment's user to current_user, which returns the signed-in user instance
+#########Assignment-42##########
+       @topic = Topic.find(params[:topic_id])
+       comment = @topic.comments.new(comment_params)
+       comment.user = current_user
+
        @post = Post.find(params[:post_id])
        comment = @post.comments.new(comment_params)
        comment.user = current_user
@@ -21,6 +24,10 @@ class CommentsController < ApplicationController
      end
 
   def destroy
+#########Assignment-42############
+    @topic = Topic.find(params[:topic_id])
+    comment = @topic.comments.new(comment_params)
+##################################
      @post = Post.find(params[:post_id])
      comment = @post.comments.find(params[:id])
 

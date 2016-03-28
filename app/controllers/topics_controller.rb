@@ -8,7 +8,10 @@ class TopicsController < ApplicationController
     end
 
    def show
-     @topic = Topic.find(params[:id])
+      @topic = Topic.find(params[:id])
+#########Assignment-42###############
+      @comment = @topic.comments.new
+#####################################
    end
 
    def new

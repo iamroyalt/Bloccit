@@ -7,4 +7,12 @@
      <%= f.text_field :body, class: 'form-control', placeholder: "Enter a new comment" %>
    </div>
    <%= f.submit "Submit Comment", class: 'btn btn-default pull-right' %>
+<!--Assingment-42 -->
+<%= form_for [topic, comment] do |f| %>
+  <div class="form-group">
+    <%= f.label :body, class: 'sr-only' %>
+    <%= f.text_field :body, class: 'form-control', placeholder: "Enter a new comment" %>
+  </div>
+  <%= f.submit "Submit Comment", class: 'btn btn-default pull-right' %>
  <% end %>
+<% end %>

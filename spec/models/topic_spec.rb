@@ -8,9 +8,11 @@ RSpec.describe Topic, type: :model do
    it { is_expected.to have_many(:labelings) }
  #we expect topics to have many labels through labelings
    it { is_expected.to have_many(:labels).through(:labelings) }
-
-
-
+#############################################
+#Assignment-42 changes
+   it { is_expected.to have_many(:commentings)}
+   it { is_expected.to have_many(:comments).through(:commentings) }
+#############################################
    describe "attributes" do
      it "responds to name" do
        expect(topic).to respond_to(:name)

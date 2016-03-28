@@ -4,7 +4,10 @@ class Post < ActiveRecord::Base
   has_many :comments, dependent: :destroy
   has_many :labelings, as: :labelable
   has_many :labels, through: :labelings
-
+  #############Assignment-42###############
+   has_many :commentings, as: :commentable
+   has_many :comments, through: :commentings
+  ########################################
 #The default_scope will order all posts by their created_at date, in descending order,
 #The most recent posts will be displayed first on topic show views
   default_scope {order ('created_at DESC')}
