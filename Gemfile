@@ -33,3 +33,5 @@ source 'https://rubygems.org'
  gem 'bootstrap-sass'
 
 gem 'bcrypt'
+
+gem 'figaro', '1.0'
