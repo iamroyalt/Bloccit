@@ -9,6 +9,8 @@ class CommentsController < ApplicationController
        comment = @topic.comments.new(comment_params)
        comment.user = current_user
 
+
+
        @post = Post.find(params[:post_id])
        comment = @post.comments.new(comment_params)
        comment.user = current_user
