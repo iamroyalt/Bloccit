@@ -5,42 +5,32 @@ class CommentsController < ApplicationController
 
      def create
 #########Assignment-42##########
-       @topic = Topic.find(params[:topic_id])
-       comment = @topic.comments.new(comment_params)
-       comment.user = current_user
+    commentable = Post.find(params[:post_id]) || Topic.find(params[:topic_id])
+    comment = Comment.new comment_params
+    comment.assign_attributes(commentable: commentable, user: current_user)
 
+      if comment.save
+        flash[:notice] = "Comment saved successfully"
+        redirect_to :back
+      else
+        flash[:alert] = "Comment failed to save"
+        redirect_to :back
+      end
+    end
 
-
-       @post = Post.find(params[:post_id])
-       comment = @post.comments.new(comment_params)
-       comment.user = current_user
-
-       if comment.save
-         flash[:notice] = "Comment saved successfully."
-         redirect_to [@post.topic, @post]
-#redirect to the posts show view. Depending on whether the comment was valid, we'll either display a success or an error message to the user.
-       else
-         flash[:alert] = "Comment failed to save."
-         redirect_to [@post.topic, @post]
-       end
-     end
 
   def destroy
-#########Assignment-42############
-    @topic = Topic.find(params[:topic_id])
-    comment = @topic.comments.new(comment_params)
-##################################
-     @post = Post.find(params[:post_id])
-     comment = @post.comments.find(params[:id])
+    commentable = Post.find(params[:post_id]) || Topic.find(params[:topic_id])
+    comment = commentable.find params[:id]
 
-     if comment.destroy
-       flash[:notice] = "Comment was deleted."
-       redirect_to [@post.topic, @post]
-     else
-       flash[:alert] = "Comment couldn't be deleted. Try again."
-       redirect_to [@post.topic, @post]
-     end
-   end
+    if comment.destroy
+      flash[:notice] = "Comment was deleted"
+      redirect_to :back
+    else
+      flash[:alert] = "Comment couldn't be deleted. Please try again."
+      redirect_to :back
+    end
+  end
 
      private
 
