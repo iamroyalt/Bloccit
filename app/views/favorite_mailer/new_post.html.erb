@@ -1,0 +1,9 @@
+<html>
+   <head>
+     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+   </head>
+   <body>
+     <h1>You are following "<%= @post.title %>" and will now be notified of all new comments </h1>
+       <%= link_to "View Post on site", topic_post_url(@post.topic, @post, anchor: "comment-#{@comment.id}") %>
+   </body>
+</html>

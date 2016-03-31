@@ -6,7 +6,7 @@ class Post < ActiveRecord::Base
   has_many :labelings, as: :labelable
   has_many :labels, through: :labelings
   has_many :favorites, dependent: :destroy
-
+  after_create :create_favorite
 #The default_scope will order all posts by their created_at date, in descending order,
 #The most recent posts will be displayed first on topic show views
   default_scope {order ('created_at DESC')}
