@@ -2,7 +2,7 @@ Rails.application.routes.draw do
  resources :labels, only: [:show]
 
 #resource instructs Rails to create routes for creating, updating, viewing, and deleting instances
-  resources :topics do
+    resources :topics do
     resources :posts, except: [:index]
     resources :comments, only: [:create, :destroy]
   end

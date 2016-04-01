@@ -44,7 +44,7 @@
     <h1>Label: <%= @comment.body %></h1>
     <% @comment.topics.each do |topic| %>
       <div>
-        Topic: <%= link_to topic.name, topic %>
+        Topic: <%= link_to topic.name, topic_post_path(@topic, post) %>
       </div>
     <% end %>
     <% @comment.posts.each do |post| %>
