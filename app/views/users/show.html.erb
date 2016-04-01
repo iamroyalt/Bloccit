@@ -20,10 +20,22 @@
      </div>
    </div>
  </div>
-
+<!-- determine if user has any contributions -->
+ <%if @user.has_contributed?%>
 <!-- display all user's posts and comments -->
  <h2>Posts</h2>
  <%= render @user.posts %>
 
  <h2>Comments</h2>
  <%= render @user.comments %>
+<!-- statement made if user has not contributed -->
+<% else %>
+  <h2><%= @user.name %> has not submitted any post yet. </h2>
+<% end %>
+<!-- show list of user's favorites-->
+<% if @user.has_favorites? %>
+<h2> List of <%=@user.name%> 's favorites. </h2>
+  <%= @user.favorites.each do |favorite| %>
+  <%= render partial: 'users/favorite', locals: {post: favorite.post} %>
+  <% end %>
+<% end %>

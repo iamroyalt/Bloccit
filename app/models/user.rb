@@ -33,4 +33,14 @@ class User < ActiveRecord::Base
      gravatar_id = Digest::MD5::hexdigest(self.email).downcase
      "http://gravatar.com/avatar/#{gravatar_id}.png?s=#{size}"
    end
+#Assignment-45
+#method to determine is user has any comments or posts
+#.any? returns true if a value is returned
+   def has_contributed?
+     comments.any? || posts.any?
+  end
+#method to determine is user has any favorites
+  def has_favorites?
+    favorites.any?
+  end
 end
