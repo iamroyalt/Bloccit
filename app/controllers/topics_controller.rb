@@ -5,10 +5,20 @@ class TopicsController < ApplicationController
 
     def index
       @topics = Topic.all
+#Checkpoint-45 using the visible_to scope from topic.rb
+      @topics = Topic.visible_to(current_user)
+
     end
 
    def show
      @topic = Topic.find(params[:id])
+#Checkpoint-45 ensuring only signed in guests can view private topics
+    unless @topic.public || current_user
+      flash[:alert] = "You must be signed in to view private topics."
+      redirect_to new_session_path
+    end
+
+     
    end
 
    def new

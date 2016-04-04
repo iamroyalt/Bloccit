@@ -5,12 +5,18 @@ include SessionsHelper
 RSpec.describe TopicsController, type: :controller do
   #let (:my_topic) { Topic.create!(name:  RandomData.random_sentence, description:   RandomData.random_paragraph) }
   let(:my_topic) { create(:topic) }
-  
+  let(:my_private_topic) { create(:topic, public: false) }
+
   context "guest" do
     describe "GET index" do
       it "returns http success" do
         get :index
         expect(response).to have_http_status(:success)
+      end
+#Checkpoint-45 test that private topics are not retrieved for guest users
+      it "does not include private topics in @topics" do
+               get :index
+               expect(assigns(:topics)).not_to include(my_private_topic)
       end
 
       it "assigns Topic.all to topic" do
@@ -20,6 +26,12 @@ RSpec.describe TopicsController, type: :controller do
     end
 
     describe "GET show" do
+#Checkpoint-45 ensuring only signed in guests can view private topics, not use url
+      it "redirects from private topics" do
+         get :show, {id: my_private_topic.id}
+         expect(response).to redirect_to(new_session_path)
+       end
+
       it "returns http success" do
         get :show, {id: my_topic.id}
         expect(response).to have_http_status(:success)
@@ -89,7 +101,8 @@ RSpec.describe TopicsController, type: :controller do
 
       it "assigns Topic.all to topic" do
         get :index
-        expect(assigns(:topics)).to eq([my_topic])
+#Checkpoint-45 expect to retrieve private topics for signed in users
+        expect(assigns(:topics)).to eq([my_topic, my_private_topic])
       end
     end
 
@@ -163,7 +176,8 @@ RSpec.describe TopicsController, type: :controller do
 
       it "assigns Topic.all to topic" do
         get :index
-        expect(assigns(:topics)).to eq([my_topic])
+#Checkpoint-45 expect to retrieve private topics for signed in users
+        expect(assigns(:topics)).to eq([my_topic, my_private_topic])
       end
     end
 
