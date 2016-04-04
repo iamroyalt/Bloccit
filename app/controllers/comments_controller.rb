@@ -7,29 +7,41 @@ class CommentsController < ApplicationController
 #we find the correct post using post_id and then create a new comment using comment_params.
 ##We assign the comment's user to current_user, which returns the signed-in user instance
        @post = Post.find(params[:post_id])
-       comment = @post.comments.new(comment_params)
-       comment.user = current_user
-
-       if comment.save
+#Checkpoint-47 making comment -> @comment instance variable for javascript
+       @comment = @post.comments.new(comment_params)
+       @comment.user = current_user
+       @new_comment = Comment.new
+       
+       if @comment.save
          flash[:notice] = "Comment saved successfully."
-         redirect_to [@post.topic, @post]
 #redirect to the posts show view. Depending on whether the comment was valid, we'll either display a success or an error message to the user.
        else
          flash[:alert] = "Comment failed to save."
-         redirect_to [@post.topic, @post]
        end
+#Checkpoint-47 block for javascript
+       respond_to do |format|
+       format.html
+       format.js
+     end
      end
 
   def destroy
      @post = Post.find(params[:post_id])
-     comment = @post.comments.find(params[:id])
+#Checkpoint-47..comment becomes @comment because we need to have access to the variable in .js.erb view
+     @comment = @post.comments.find(params[:id])
 
-     if comment.destroy
+     if @comment.destroy
        flash[:notice] = "Comment was deleted."
-       redirect_to [@post.topic, @post]
+
      else
        flash[:alert] = "Comment couldn't be deleted. Try again."
-       redirect_to [@post.topic, @post]
+     end
+#Checkpoint-47 respond_to block gives controller action the ability to return different response types
+#depending on what was asked for in request. controller's repsonse is unchanged is client requests HTML, but
+#if the client requests javascript, the controller will rend .js.erb instead
+     respond_to do |format|
+       format.html
+       format.js
      end
    end
 

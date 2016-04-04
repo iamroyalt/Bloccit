@@ -1,10 +1,15 @@
+<h4>Add a comment</h4>
+<!--Checkpoint 47 add remote: true to enable Ajax on form -->
+<%= form_for [post, comment], remote: true do |f| %>
 <div class="media">
   <%= content_tag :div, class: 'media', id: "comment-#{comment.id}" do %>
    <div class="media-body">
      <small>
        <%= comment.user.name %> commented <%= time_ago_in_words(comment.created_at) %> ago
        <% if user_is_authorized_for_comment?(comment) %>
-       | <%= link_to "Delete", [comment.post, comment], method: :delete %>
+<!--Checkpoint-47 remote: :true adds a jQuery listener to the form, which allows the form to be submitted -->
+<!--without the page refreshing-->
+       | <%= link_to "Delete", [comment.post, comment], method: :delete, remote: true %>
        <% end %>
      </small>
      <p><%= comment.body %></p>

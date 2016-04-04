@@ -14,7 +14,8 @@
          <h2 class="media-heading"><%= @user.name %></h2>
          <small>
            <%= pluralize(@user.posts.count, 'post') %>,
-           <%= pluralize(@user.comments.count, 'comment') %>
+<!-- Checkpoint-47 add a class on the proper header element updated for AJAX -->
+           <div class='js-comments-count'><%= pluralize(@user.comments.count, 'comment') %></div>
          </small>
        </div>
      </div>
