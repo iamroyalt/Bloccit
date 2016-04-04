@@ -8,5 +8,6 @@ $('#comment-<%= @comment.id %>').hide();
    $('.js-comments-count').html("<%= pluralize(@comment.user.comments.count, 'comment') %>");
  <% else %>
  //Checkpoint-47 add a new flash notice notifying the user that an error has occured
-   $('.flash').prepend("<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert'>&times;</button><%= flash.now[:alert] %></div>");
+ //Assingmnent-47 append method//
+   $('.flash').append("<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert'>&times;</button><%= flash.now[:alert] %></div>");
  <% end %>
