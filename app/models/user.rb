@@ -34,13 +34,18 @@ class User < ActiveRecord::Base
      "http://gravatar.com/avatar/#{gravatar_id}.png?s=#{size}"
    end
 #Assignment-45
-#method to determine is user has any comments or posts
-#.any? returns true if a value is returned
-   def has_contributed?
-     comments.any? || posts.any?
-  end
-#method to determine is user has any favorites
-  def has_favorites?
-    favorites.any?
-  end
+#method to determine is user has any comments or posts  or favorites by using count method
+#this is connected to user show view if statements
+
+    def user_posts?
+      self.posts.count > 0
+    end
+
+   def user_comments?
+     self.comments.count > 0
+   end
+
+   def user_favorites?
+     self.favorites.count > 0
+   end
 end
