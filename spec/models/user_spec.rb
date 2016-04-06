@@ -118,4 +118,11 @@ RSpec.describe User, type: :model do
        expect(user.favorite_for(@post)).to eq(favorite)
      end
    end
+
+#Checkpoint-48 test for generate_auth_token method
+   describe "#generate_auth_token" do
+     it "creates a token" do
+       expect(user.auth_token).to_not be_nil
+     end
+   end
 end
