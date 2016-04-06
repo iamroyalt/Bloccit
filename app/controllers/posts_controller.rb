@@ -5,6 +5,7 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
+    @comment = @post.comments.new
   end
 #find the post that corresponds to the id in the params that was passed to show &
 #assign it to @post. Unlike in the index method, in the show method,

@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
 
   has_many :posts
   has_many :comments
+  has_many :topics
  #validates to ensure name is present and has min/max length
    validates :name, length: { minimum: 1, maximum: 100 }, presence: true
 

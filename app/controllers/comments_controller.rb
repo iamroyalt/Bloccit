@@ -2,45 +2,42 @@ class CommentsController < ApplicationController
 #require sign in to ensure that guest users are not permitted to create comments or delete
   before_action :require_sign_in
   before_action :authorize_user, only: [:destroy]
-  before_action :find_post
 
-     def create
-#########Assignment-42##########
-#find the right post using the :post_id and then create a new comment which is assigned to the user
-          #@post = Post.find(params[:post_id])
-    comment = @post.comments.new(comment_params)
-    comment.user = current_user
+#########Assignment-42#########
+  def create
+    if params[:post_id]
+      @post = Post.find(params[:post_id])
+      comment = @post.comments.new(comment_params)
+      comment.user = current_user
 
-    if comment.save
-      flash[:notice] = "Comment saved successfully."
-      redirect_to [@post.topic, @post]
+      if comment.save
+        flash[:notice] = "Comment saved successfully."
+        redirect_to [@post.topic, @post]
+      else
+        flash[:alert] = "Comment failed to save."
+        redirect_to [@post.topic, @post]
+      end
+    elsif params[:topic_id]
+      @topic = Topic.find(params[:topic_id])
+      comment = @topic.comments.new(comment_params)
+      comment.user = current_user
 
-    else
-      flash[:alert] = "Comment failed to save."
-      redirect_to [@post.topic, @post]
+      if comment.save
+        flash[:notice] = "Comment saved successfully."
+        redirect_to @topic
+
+      else
+        flash[:alert] = "Comment failed to save."
+        redirect_to @topic
+      end
     end
   end
-#find the right topic using :topic_id and then create a new comment which is assigned to the user
-#@topic = Topic.find(params[:topic_id])
-    comment = @topic.comments.new(comment_params)
-    comment.user = current_user
-
-    if comment.save
-      flash[:notice] = "Comment saved successfully."
-      redirect_to [@topic]
-
-    else
-      flash[:alert] = "Comment failed to save."
-      redirect_to [@topic]
-    end
-  end
-
 
   def destroy
-#following the logic above...identifying the right :post_id to delete
-          #params[:post_id]
-    @post = Post.find(params[:post_id])
-    comment = @post.comments.find(params[:id])
+
+    if params[:post_id]
+      @post = Post.find(params[:post_id])
+      comment = @post.comments.find(params[:id])
 
     if comment.destroy
       flash[:notice] = "Comment was deleted."
@@ -50,9 +47,9 @@ class CommentsController < ApplicationController
       redirect_to [@post.topic, @post]
     end
 
-
+  else
     @topic = Topic.find(params[:topic_id])
-      comment = @topic.comments.find(params[:id])
+    comment = @topic.comments.find(params[:id])
 
     if comment.destroy
       flash[:notice] = "Comment was deleted."
@@ -61,12 +58,11 @@ class CommentsController < ApplicationController
       flash[:alert] = "Comment couldn't be deleted. Try again."
       redirect_to [@topic]
    end
+ end
 end
-
-
 private
 
-    def find_post
+    def from_post
       comment = @post.comments.find(params[:id])
     end
 
@@ -80,6 +76,8 @@ private
        comment = Comment.find(params[:id])
          unless current_user == comment.user || current_user.admin?
            flash[:alert] = "You do not have permission to delete a comment."
+           #redirect_to [comment.post.topic, comment.post]
            redirect_to [comment.post.topic, comment.post]
-       end
+         end
+      end
 end

@@ -11,6 +11,7 @@ class TopicsController < ApplicationController
       @topic = Topic.find(params[:id])
 #########Assignment-42###############
       @comment = @topic.comments.new
+      #@topic.user = current_user
 #####################################
    end
 
@@ -20,6 +21,7 @@ class TopicsController < ApplicationController
 
    def create
       @topic = Topic.new(topic_params)
+
 
       if @topic.save
 #call a class method named update_labels on Label. We pass it the labels associated with the current topic_params
