@@ -1,22 +1,11 @@
 
 <!--Assingment-42 saving comment to post or a topic-->
 <h4>Add a comment</h4>
- <% if @post %>
-   <%= form_for [post, comment] do |f| %>
-     <div class='form-group'>
-       <%= f.label :body, class: 'sr-only' %>
-       <%= f.text_field :body, class: 'form-control', placeholder: "Enter a comment" %>
-     </div>
-     <%= f.submit "Submit Post Comment", class: 'btn btn-default pull-right' %>
-   </br>
-   <% end %>
- <% elsif @topic %>
-   <%= form_for [topic, comment] do |f| %>
-     <div class='form-group'>
-       <%= f.label :body, class: 'sr-only' %>
-       <%= f.text_field :body, class: 'form-control', placeholder: "Enter a comment" %>
-     </div>
-     <%= f.submit "Submit Topic Comment", class: 'btn btn-default pull-right' %>
-   </br>
-   <% end %>
- <% end %>
+<%= form_for [parent, comment] do |f| %>
+  <div class='form-group'>
+    <%= f.label :body, class: 'sr-only' %>
+    <%= f.text_field :body, class: 'form-control', placeholder: "Enter a comment" %>
+  </div>
+  <%= f.submit "Submit Post Comment", class: 'btn btn-default pull-right' %>
+  </br>
+<% end %>

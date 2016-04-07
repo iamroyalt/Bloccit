@@ -31,7 +31,7 @@ end
    #create specs for member users who attempt to create new comments or delete comments they don't own
      context "member user doing CRUD on a comment they don't own" do
        before do
-         create_session(other_user)
+         create_session(my_user)
        end
 
        describe "POST create" do
@@ -45,11 +45,11 @@ end
          end
 
          it "increases the number of comments by 1" do
-           expect{ post :create, topic_id: my_topic.id, comment: {body: RandomData.random_sentence} }.to change(Comment,:count).by(1)
+           expect{ post :create, post_id: my_post.id, comment: {body: RandomData.random_sentence} }.to change(Comment,:count).by(1)
          end
 
          it "redirects to the post show view" do
-           post :create, topic_id: my_topic.id, comment: {body: RandomData.random_sentence}
+           post :create, post_id: my_post.id, comment: {body: RandomData.random_sentence}
            expect(response).to redirect_to [my_topic, my_post]
          end
 
