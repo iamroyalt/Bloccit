@@ -62,9 +62,9 @@ class CommentsController < ApplicationController
 end
 private
 
-    def from_post
-      comment = @post.comments.find(params[:id])
-    end
+    #def from_post
+      #comment = @post.comments.find(params[:id])
+    #end
 
    #private method thatt white lists the parameters we need to create comments
      def comment_params
