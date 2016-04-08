@@ -1,10 +1,11 @@
 require 'rails_helper'
 
- RSpec.describe Api::V1::TopicsController, type: :controller do
+ RSpec.describe Api::V1::PostsController, type: :controller do
    let(:my_user) { create(:user) }
    let(:my_topic) { create(:topic) }
+   let(:my_post) { create(:post, topic: my_topic, user: my_user)}
+   let(:my_comment) { Comment.create!(body: RandomData.random_paragraph, post: my_post, user: my_user) }
 
-#Checkpoint-48 want unauthenticated users to be able to fetch a topic or all topics, per access rules
    context "unauthenticated user" do
      it "GET index returns http success" do
        get :index
@@ -12,16 +13,15 @@ require 'rails_helper'
      end
 
      it "GET show returns http success" do
-       get :show, id: my_topic.id
+       get :show, id: my_post.id
        expect(response).to have_http_status(:success)
      end
-#Assignment-48 returns child posts
-     it "GET show returns child posts" do
-         get :show, id: my_topic.id
-         parsed_body = JSON.parse(response.body)
-         expect(parsed_body['posts']).to_not be_nil
-     end
 
+     it "GET show returns child comments" do
+         get :show, id: my_post.id
+         parsed_body = JSON.parse(response.body)
+         expect(parsed_body['comments']).to_not be_nil
+     end
    end
 
    context "unauthorized user" do
@@ -35,14 +35,14 @@ require 'rails_helper'
      end
 
      it "GET show returns http success" do
-       get :show, id: my_topic.id
+       get :show, id: my_post.id
        expect(response).to have_http_status(:success)
      end
-#Assignment-48 return child posts
-     it "GET show returns child posts" do
-        get :show, id: my_topic.id
+
+     it "GET show returns child comments" do
+         get :show, id: my_post.id
          parsed_body = JSON.parse(response.body)
-         expect(parsed_body['posts']).to_not be_nil
+         expect(parsed_body['comments']).to_not be_nil
      end
    end
- end
+end
