@@ -11,7 +11,7 @@ class CommentsController < ApplicationController
        @comment = @post.comments.new(comment_params)
        @comment.user = current_user
        @new_comment = Comment.new
-       
+
        if @comment.save
          flash[:notice] = "Comment saved successfully."
 #redirect to the posts show view. Depending on whether the comment was valid, we'll either display a success or an error message to the user.
@@ -23,7 +23,7 @@ class CommentsController < ApplicationController
        format.html
        format.js
      end
-     end
+  end
 
   def destroy
      @post = Post.find(params[:post_id])
