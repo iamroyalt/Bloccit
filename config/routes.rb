@@ -26,6 +26,11 @@ Rails.application.routes.draw do
 #Checkpoint-49 add create and update to :users
        resources :users, only: [:index, :show, :create, :update]
        resources :topics, except: [:edit, :new]
+#Assignment-49 routes update
+       resources :topics do
+         resources :posts, only: [:create, :update, :destroy]
+       end
+
+       end
      end
    end
-end

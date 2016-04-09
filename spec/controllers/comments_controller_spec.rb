@@ -121,9 +121,8 @@ RSpec.describe CommentsController, type: :controller do
          it "returns http success" do
          delete :destroy, format: :js, post_id: my_post.id, id: my_comment.id
          expect(response).to have_http_status(:success)
-
-
          end
        end
      end
-  end
+end
+end
